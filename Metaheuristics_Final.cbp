@@ -33,6 +33,10 @@
 		</Compiler>
 		<Unit filename="CVImage.cpp" />
 		<Unit filename="CVImage.h" />
+		<Unit filename="GA.cpp" />
+		<Unit filename="GA.h" />
+		<Unit filename="Picture.h" />
+		<Unit filename="Solution.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
