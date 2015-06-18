@@ -5,6 +5,27 @@
 #include <algorithm>
 using namespace std;
 
+void CVImage::loadFrompicture(Picture & pic)
+{
+    for(int i=0; i<height; i+=1) {
+        for(int j=0; j<width; j+=1) {
+            setData(i, j, cvScalar( pic.B[i*width+j], pic.G[i*width+j], pic.R[i*width+j]) );
+        }
+    }
+}
+void CVImage::save2picture(Picture & pic)
+{
+    pic.width = width;
+    pic.height = height;
+    for(int i=0; i<height; i+=1) {
+        for(int j=0; j<width; j+=1) {
+            pic.R[i*width+j] = getR(i, j);
+            pic.G[i*width+j] = getG(i, j);
+            pic.B[i*width+j] = getB(i, j);
+        }
+    }
+}
+
 void CVImage::DrawCircle(int x, int y, int radius, int R, int G, int B, int alpha)
 {
     int left = max(x - radius, 0);

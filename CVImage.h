@@ -3,6 +3,7 @@
 
 #include <cv.h>
 #include <highgui.h>
+#include "Picture.h"
 
 class CVImage
 {
@@ -17,6 +18,8 @@ public:
     double getG(int i, int j) { return cvGet2D(p2image, i , j ).val[1]; }
     double getR(int i, int j) { return cvGet2D(p2image, i , j ).val[2]; }
     double getA(int i, int j) { return cvGet2D(p2image, i , j ).val[3]; }
+    size_t geth() { return height; }
+    size_t getw() { return width; }
     CvScalar getData(int i, int j) { return cvGet2D(p2image, i, j); }
     void setData(int i, int j, const CvScalar & rhs) { cvSet2D(p2image, i, j, rhs); }
     const CVImage & operator = (const CVImage & rhs)
@@ -36,6 +39,8 @@ public:
     {
         cvSaveImage(filename, p2image);
     }
+    void loadFrompicture(Picture & pic);
+    void save2picture(Picture & pic);
     void show(char window[])
     {
         cvShowImage(window, p2image);
