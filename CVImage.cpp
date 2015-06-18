@@ -5,36 +5,23 @@
 #include <algorithm>
 using namespace std;
 
-void CVImage::gray()
+void CVImage::DrawCircle(int x, int y, int radius, int R, int G, int B, int alpha)
 {
-    for(int i=0; i<height; i+=1) {
-        for(int j=0; j<width; j+=1) {
-            double tmp = getB(i,j) + getG(i,j) + getR(i,j);
-            tmp /= 3;
-            setData( i, j, cvScalarAll(tmp) );
+    int left = max(x - radius, 0);
+    int right = min(x + radius, (int)width);
+    int up = max(y - radius, 0);
+    int down = min(y + radius, (int)height);
+    for(int i=up; i<down; i+=1) {
+        for(int j=left; j<right; j+=1) {
+            if( (i-y)*(i-y) + (j-x)*(j-x) < radius*radius ) {
+//                    setData( i, j, cvScalar( (getB(i, j)*getA(i, j) + B*alpha)/255,
+//                                             (getG(i, j)*getA(i, j) + G*alpha)/255,
+//                                             (getR(i, j)*getA(i, j) + R*alpha)/255,
+//                                             (getA(i, j) + alpha) ) );
+                setData( i, j, cvScalar( (getB(i, j)*(255-alpha) + B*alpha)/255,
+                                         (getG(i, j)*(255-alpha) + G*alpha)/255,
+                                         (getR(i, j)*(255-alpha) + R*alpha)/255) );
+            }
         }
     }
-}
-
-void CVImage::GaussianNoise(double sigma, double miu)
-{
-    vector<double> CDF(100);
-    CDF[0] = 0;
-    for(int i=1; i<CDF.size(); i+=1)
-        CDF[i] = CDF[i-1] + Gaussian(sigma, miu, i-50);
-    double shift = (1-CDF.back()) / 2;
-    for(int i=0; i<CDF.size(); i+=1)
-        CDF[i] += shift;
-
-    vector<int> counting(256, 0);
-    for(int i=0; i<height; i+=1) {
-        for(int j=0; j<width; j+=1) {
-            double random = (double)rand() / RAND_MAX;
-            int ind = lower_bound(CDF.begin(), CDF.end(), random) - CDF.begin();
-            setData(i, j, cvScalarAll(100 + ind-50));
-            counting[ getB(i, j) ] += 1;
-        }
-    }
-//    for(int i=0; i<counting.size(); i+=1)
-//        cout << i << '\t' << counting[i] << endl;
 }
