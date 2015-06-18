@@ -3,9 +3,6 @@
 
 #include <cv.h>
 #include <highgui.h>
-#include <cmath>
-
-#include <algorithm>
 
 class CVImage
 {
@@ -13,10 +10,6 @@ class CVImage
     size_t height, width;
 
     const double PI = 3.1415926535;
-    double Gaussian(double sigma, double miu, double x)
-    {
-        return 1.0/(sqrt(2*PI)*sigma) * exp(-1*(x-miu)*(x-miu)/(2*sigma*sigma));
-    }
 
 public:
     ~CVImage() { if(NULL) release(); }
@@ -70,7 +63,7 @@ public:
     }
 
     void DrawCircle(int x, int y, int radius, int R, int G, int B, int alpha);
-
+    int CalcDifference(CVImage & rhs);
 };
 
 #endif // CVIMAGE_H_INCLUDED

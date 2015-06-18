@@ -25,3 +25,19 @@ void CVImage::DrawCircle(int x, int y, int radius, int R, int G, int B, int alph
         }
     }
 }
+
+int CVImage::CalcDifference(CVImage & rhs)
+{
+    int diff = 0, tmp;
+    for(int i=0; i<height; i+=1) {
+        for(int j=0; j<width; j+=1) {
+            tmp = getB(i, j) - rhs.getB(i, j);
+            diff += tmp*tmp;
+            tmp = getG(i, j) - rhs.getG(i, j);
+            diff += tmp*tmp;
+            tmp = getR(i, j) - rhs.getR(i, j);
+            diff += tmp*tmp;
+        }
+    }
+    return diff;
+}
