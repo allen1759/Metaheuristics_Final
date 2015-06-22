@@ -7,17 +7,19 @@
 #include "CVImage.h"
 #include <iostream>
 #include <string>
+#include <cstdlib>
 using namespace std;
-
-
 
 class GA
 {
     CVImage cvpic;
     Picture origin, pic;
     std::vector<Solution> soluSet;
+    std::vector<Solution> mating;
+    std::vector<Solution> child;
     int divide_width=10, divide_height=10;
     int parent=10;
+    int select_num=6;
 
 public:
     bool initial(char fileName[])
@@ -30,15 +32,15 @@ public:
         cvpic.show("Original Picture");
 
 // test 用的 =======================
-    cvpic.save2picture(pic);
-    Circle test;
-    test.R = 0; test.G = 0; test.B = 255; test.A = 100;
-    test.x = 50; test.y = 50; test.radius = 100;
-    Solution tt;
-    tt.DrawCircle( test, pic );
-    cvpic.loadFrompicture(pic);
-    cvpic.show("new window8");
-    cvWaitKey(0);
+//    cvpic.save2picture(pic);
+//    Circle test;
+//    test.R = 0; test.G = 0; test.B = 255; test.A = 100;
+//    test.x = 50; test.y = 50; test.radius = 100;
+//    Solution tt;
+//    tt.DrawCircle( test, pic );
+//    cvpic.loadFrompicture(pic);
+//    cvpic.show("new window8");
+//    cvWaitKey(0);
 // test 用的 =======================
         return true;
     }
@@ -101,17 +103,9 @@ public:
 
     }
 
+    // 選出 select_num 個 solution 來當成 mating
+    void Roulette_Wheel_Seletion();
 
-
-//    void Crossover(Solution &ls,Solution &rs)
-//    {
-//        int x_part = rand()%divide_width;
-//        int y_part = rand()%divide_height;
-////        int ls_odd_size = ls.size();
-////        int rs_odd_size = rs.size();
-////        for(int i=0; i<)
-//        ls.sol[y_part][x_part]
-//    }
 
 };
 

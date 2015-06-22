@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cstring>
 #include "picture.h"
+#include <cstdio>
 using namespace std;
 
 struct Circle
