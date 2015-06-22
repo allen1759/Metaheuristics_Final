@@ -13,9 +13,17 @@ struct Circle
 
 class Solution
 {
-    std::vector< std::vector<Circle> > sol;
+public:
+    std::vector< std::vector< std::vector<Circle> > > sol;
 
 public:
+    Solution() {}
+    Solution(int h, int w)
+    {
+        sol.resize(h);
+        for(int i=0; i<h; i+=1)
+            sol[i].resize(w);
+    }
     void DrawCircle(Circle & circ, Picture & pic)
     {
         int left = max(circ.x - circ.radius, 0);
@@ -32,6 +40,20 @@ public:
             }
         }
     }
+
+    void DrawAll(Picture & pic)
+    {
+        pic.setWhite();
+        for(int i=0; i<sol.size(); i+=1) {
+            for(int j=0; j<sol[i].size(); j+=1) {
+                for(int k=0; k<sol[i][j].size(); k+=1) {
+                    DrawCircle(sol[i][j][k], pic);
+                }
+            }
+        }
+    }
+
+
 };
 
 

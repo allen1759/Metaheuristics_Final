@@ -12,6 +12,7 @@ int main()
     srand(time(NULL));
     GA mona;
     if( !mona.initial("monalisa.jpg") ) return 1;
+    mona.generateInitSoluction();
 
     cvWaitKey(0);
 

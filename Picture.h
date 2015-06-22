@@ -22,6 +22,13 @@ public:
         B = new int[w*h];
     }
 
+    void setWhite()
+    {
+        for(int i=0; i<height*width; i+=1) {
+            R[i] = G[i] = B[i] = 255;
+        }
+    }
+
     // fitness function
     int CalcDifference(Picture & rhs)
     {
