@@ -32,7 +32,7 @@ public:
     // fitness function
     int CalcDifference(Picture & rhs)
     {
-        int diff = 0, tmp;
+        long long int diff = 0, tmp;
         for(int i=0; i<height; i+=1) {
             for(int j=0; j<width; j+=1) {
                 tmp = R[i*width+j] - rhs.R[i*width+j];
@@ -43,7 +43,7 @@ public:
                 diff += tmp*tmp;
             }
         }
-        return diff;
+        return diff/100000;
     }
 };
 

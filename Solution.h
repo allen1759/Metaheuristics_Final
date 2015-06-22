@@ -19,8 +19,8 @@ class Solution
 {
 public:
     std::vector< std::vector< std::vector<Circle> > > sol;
+    int score;
 
-public:
     Solution() {}
     Solution(int divide_height, int divide_width, Picture &origin)
     {
@@ -33,8 +33,8 @@ public:
         memset(tG, 0, sizeof(tG));
         memset(tB, 0, sizeof(tB));
         memset(area, 0, sizeof(area));
-        int newWidth=(origin.width/divide_width)+1;
-        int newHeight=(origin.height/divide_height)+1;
+        int newWidth=(origin.width/divide_width) + 1;
+        int newHeight=(origin.height/divide_height) + 1;
 
         for(int i=0; i<origin.height; i+=1){
             for(int j=0; j<origin.width; j+=1){
@@ -51,7 +51,7 @@ public:
                 if( area[i][j] == 0 ) continue;
                 Circle tC;
                 tC.A=100+rand()%100;
-                tC.radius=newHeight/2 + rand()%(newHeight);
+                tC.radius=newHeight/2 + rand()%(newHeight/2);
                 tC.R=tR[i][j]/area[i][j]-25+rand()%50;
                 tC.G=tG[i][j]/area[i][j]-25+rand()%50;
                 tC.B=tB[i][j]/area[i][j]-25+rand()%50;
@@ -60,6 +60,10 @@ public:
                 sol[i][j].push_back(tC);
             }
         }
+    }
+    bool operator < (const Solution & rhs) const
+    {
+        return score < rhs.score;
     }
     void DrawCircle(Circle & circ, Picture & pic)
     {
@@ -92,6 +96,7 @@ public:
 
     void Crossover(Solution &rs, int divide_height, int divide_width)
     {
+
         int x_part = rand()%divide_width;
         int y_part = rand()%divide_height;
         sol[y_part][x_part].swap(rs.sol[y_part][x_part]);
@@ -108,30 +113,23 @@ public:
     {
         Circle add;
         add.A=100+rand()%100;
-        add.radius=rand()%(origin.height/3);
-        add.R=rand()%255;
-        add.G=rand()%255;
-        add.B=rand()%255;
+        add.radius=rand()%(origin.height/divide_height/2);
+
         add.x=rand()%origin.width;
         add.y=rand()%origin.height;
 
-        int newHeight=origin.height/divide_height;
-        int newWidth=origin.width/divide_width;
+        add.R = origin.R[ add.y*origin.width+add.x ];
+        add.G = origin.G[ add.y*origin.width+add.x ];
+        add.B = origin.B[ add.y*origin.width+add.x ];
+
+        int newHeight = origin.height/divide_height + 1;
+        int newWidth = origin.width/divide_width + 1;
 
         printf("x:%d  y:%d\n", add.x, add.y);
 
-        sol[ add.x/newWidth ][ add.y/newHeight ].push_back(add);
+        sol[ add.y/newHeight ][ add.x/newWidth ].push_back(add);
         printf("i:%d  j:%d\n", add.x/newWidth, add.y/newHeight);
 
-//        for(int i=0; i<divide_height; i+=1){
-//            for(int j=0; j<divide_width; j+=1){
-//                if(add.x>=i*newHeight && add.x<=(i+1)*newHeight && add.y>=j*newWidth && add.y<=(j+1)*newWidth){
-//                    sol[i][j].push_back(add);
-//                    printf("i:%d  j:%d\n", i, j);
-//                    break;
-//                }
-//            }
-//        }
     }
 
 };
