@@ -45,6 +45,11 @@ public:
     {
         cvShowImage(window, p2image);
     }
+    void show(char window[], Picture & pic)
+    {
+        loadFrompicture(pic);
+        show(window);
+    }
     void destoyWindow(char window[])
     {
         cvDestroyWindow(window);

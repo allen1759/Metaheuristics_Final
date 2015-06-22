@@ -6,6 +6,7 @@
 #include "Solution.h"
 #include "CVImage.h"
 #include <iostream>
+#include <string>
 using namespace std;
 
 
@@ -14,9 +15,9 @@ class GA
 {
     CVImage cvpic;
     Picture origin, pic;
-    //std::vector<Circle> arr;
     std::vector<Solution> soluSet;
-    int divide_width=3, divide_height=3;
+    int divide_width=10, divide_height=10;
+    int parent=10;
 
 public:
     bool initial(char fileName[])
@@ -37,6 +38,7 @@ public:
     tt.DrawCircle( test, pic );
     cvpic.loadFrompicture(pic);
     cvpic.show("new window8");
+    cvWaitKey(0);
 // test 用的 =======================
         return true;
     }
@@ -44,44 +46,72 @@ public:
 
     void generateInitSoluction()
     {
-        int tR[divide_height][divide_width], tG[divide_height][divide_width], tB[divide_height][divide_width];
-        memset(tR, 0, sizeof(tR));
-        memset(tG, 0, sizeof(tG));
-        memset(tB, 0, sizeof(tB));
-        int newWidth=(origin.width/divide_width);
-        int newHeight=(origin.height/divide_height);
-        int newArea=newHeight*newWidth;
-
-        for(int i=0; i<origin.height; i+=1){
-            for(int j=0; j<origin.width; j+=1){
-                tR[ i/newHeight ][ j/newWidth ] += origin.R[i*origin.width + j];
-                tG[ i/newHeight ][ j/newWidth ] += origin.G[i*origin.width + j];
-                tB[ i/newHeight ][ j/newWidth ] += origin.B[i*origin.width + j];
-            }
-        }
-
-        Solution tS(divide_height, divide_width);
-        Circle tC;
-        tC.A=150;
-        tC.radius=newHeight/2;
-        for(int i=0; i<divide_height; i+=1){
-            for(int j=0; j<divide_width; j+=1){
-                tC.R=tR[i][j]/newArea;
-                tC.G=tG[i][j]/newArea;
-                tC.B=tB[i][j]/newArea;
-                tC.x=i*newWidth+newWidth/2;
-                tC.y=j*newHeight+newHeight/2;
-                tS.sol[i][j].push_back(tC);
-            }
-        }
-
-        tS.DrawAll(pic);
+        Solution test3030(3, 3, origin);
+        test3030.DrawAll(pic);
         cvpic.loadFrompicture(pic);
-        cvpic.show("tesstettttttttttttttttt");
+        cvpic.show("test 30 * 30");
+
+        for(int p=0; p<parent; p+=1) {
+            Solution tS(divide_height, divide_width, origin);
+            cout << "  p = " << p << endl;
+            soluSet.push_back(tS);
+        }
+
+//        test3030.AddCircle(origin, 3, 3);
+//        test3030.DrawAll(pic);
+//        cvpic.show("second 30", pic);
+
+
+//        soluSet[0].Crossover(test3030, 3, 3);
+//        test3030.DrawAll(pic);
+//        cvpic.show("third 30", pic);
+//        cout << origin.CalcDifference(pic) << endl;
+
+
+        for(int i=0;i<10;i++)
+        {
+            test3030.AddCircle(origin, 3, 3);
+            test3030.DrawAll(pic);
+            cvpic.show("second 30", pic);
+
+            cvWaitKey();
+        }
+
+        char str[100]="";
+        str[0]='1';
+        for(int i=0; i<10; i+=1){
+            if(i > 0) break;
+            soluSet[i].DrawAll(pic);
+            cvpic.loadFrompicture(pic);
+            cvpic.show(str);
+            str[i+1]='1';
+        }
+        cout << origin.CalcDifference(pic) << endl;
+
+
+        Solution test5050(50, 50, origin);
+        test5050.DrawAll(pic);
+        cvpic.loadFrompicture(pic);
+        cvpic.show("test 50 * 50");
+        cout << origin.CalcDifference(pic) << endl;
+
+
 
 
 
     }
+
+
+
+//    void Crossover(Solution &ls,Solution &rs)
+//    {
+//        int x_part = rand()%divide_width;
+//        int y_part = rand()%divide_height;
+////        int ls_odd_size = ls.size();
+////        int rs_odd_size = rs.size();
+////        for(int i=0; i<)
+//        ls.sol[y_part][x_part]
+//    }
 
 };
 
