@@ -41,16 +41,20 @@ public:
     }
     void loadFrompicture(Picture & pic);
     void save2picture(Picture & pic);
-    void show(char window[])
+    void show(const char window[])
     {
         cvShowImage(window, p2image);
     }
-    void show(char window[], Picture & pic)
+    void show(const char window[], Picture & pic)
     {
         loadFrompicture(pic);
         show(window);
     }
-    void destoyWindow(char window[])
+    void moveWindow(const char window[], int x, int y)
+    {
+        cvMoveWindow(window, x, y);
+    }
+    void destoyWindow(const char window[])
     {
         cvDestroyWindow(window);
     }

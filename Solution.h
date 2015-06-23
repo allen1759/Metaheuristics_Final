@@ -113,7 +113,7 @@ public:
     {
         Circle add;
         add.A=100+rand()%100;
-        add.radius=rand()%(origin.height/divide_height/2);
+        add.radius=rand()%(origin.height/3);
 
         add.x=rand()%origin.width;
         add.y=rand()%origin.height;
@@ -125,10 +125,10 @@ public:
         int newHeight = origin.height/divide_height + 1;
         int newWidth = origin.width/divide_width + 1;
 
-        printf("x:%d  y:%d\n", add.x, add.y);
+//        printf("x:%d  y:%d\n", add.x, add.y);
 
         sol[ add.y/newHeight ][ add.x/newWidth ].push_back(add);
-        printf("i:%d  j:%d\n", add.x/newWidth, add.y/newHeight);
+//        printf("i:%d  j:%d\n", add.x/newWidth, add.y/newHeight);
 
     }
 
