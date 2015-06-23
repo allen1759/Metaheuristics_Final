@@ -7,6 +7,7 @@
 #include <cstring>
 #include "picture.h"
 #include <cstdio>
+#include <cstdlib>
 using namespace std;
 
 struct Circle
@@ -102,9 +103,30 @@ public:
         sol[y_part][x_part].swap(rs.sol[y_part][x_part]);
     }
 
-    void Mutation(int divide_height, int divide_width)
+    void Mutation(Picture &origin, int divide_height, int divide_width)
     {
+        int num=rand()%(divide_height*divide_width/2);
 
+        Picture pic;
+        pic.memAllocate(origin.width, origin.height);
+        DrawAll(pic);
+        score = origin.CalcDifference(pic);
+        for(int k=0; k<num; k+=1){
+            int i=rand()%divide_height;
+            int j=rand()%divide_width;
+
+            for(int t=0; t<sol[i][j].size(); t+=1){
+                Solution tmp=(*this);
+                tmp.sol[i][j].erase(tmp.sol[i][j].begin()+t);
+                tmp.DrawAll(pic);
+                tmp.score = origin.CalcDifference(pic);
+
+                if(tmp.score<score){
+                    sol[i][j].erase(sol[i][j].begin()+t);
+                    break;
+                }
+            }
+        }
 
 
     }
@@ -125,11 +147,18 @@ public:
         int newHeight = origin.height/divide_height + 1;
         int newWidth = origin.width/divide_width + 1;
 
-        printf("x:%d  y:%d\n", add.x, add.y);
-
         sol[ add.y/newHeight ][ add.x/newWidth ].push_back(add);
-        printf("i:%d  j:%d\n", add.x/newWidth, add.y/newHeight);
+    }
 
+    int CalCircleNumbers(int divide_height, int divide_width)
+    {
+        int num=0;
+        for(int i=0; i<sol.size(); i+=1){
+            for(int j=0; j<sol[i].size(); j+=1){
+                num+=((int)sol[i][j].size());
+            }
+        }
+        return num;
     }
 
 };
