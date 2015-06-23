@@ -12,7 +12,8 @@ int main()
     srand(time(NULL));
     GA mona;
     if( !mona.initial("monalisa.jpg") ) return 1;
-    mona.Start();
+//    mona.Start();
+    mona.start2_4();
     //mona.generateInitSoluction();
 
 
