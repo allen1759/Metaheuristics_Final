@@ -1,6 +1,9 @@
 #ifndef PICTURE_H_INCLUDED
 #define PICTURE_H_INCLUDED
 
+#include <iostream>
+using namespace std;
+
 class Picture
 {
 public:
@@ -43,7 +46,8 @@ public:
                 diff += tmp*tmp;
             }
         }
-        return diff/100000;
+        if(diff > 1e9) return 1e9;
+        else return diff;
     }
 };
 

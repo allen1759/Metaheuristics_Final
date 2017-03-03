@@ -35,7 +35,7 @@ public:
         if(p2image)  height = p2image->height, width = p2image->width;
         return p2image!=NULL;
     }
-    void save(char filename[])
+    void save(const char filename[])
     {
         cvSaveImage(filename, p2image);
     }

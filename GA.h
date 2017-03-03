@@ -47,12 +47,19 @@ public:
 
     void generateInitSoluction()
     {
-
+//        Solution x5050(50, 50, origin);
+//        Solution x3030(30, 30, origin);
+//
+//        x5050.DrawAll(pic);
+//        cvpic.show("50 50", pic);
+//        cout << pic.CalcDifference(origin) << endl;
+//        x3030.DrawAll(pic);
+//        cvpic.show("30 30", pic);
+//        cout << pic.CalcDifference(origin) << endl;
 
         for(int p=0; p<parent; p+=1) {
             Solution tS(divide_height, divide_width, origin);
             soluSet.push_back(tS);
-
         }
     }
 
@@ -63,7 +70,7 @@ public:
         generateInitSoluction();
         bool tag = true;
         int row=2, col=4, r=0, c=0;
-        cvpic.show("new 30-2", pic);
+        //cvpic.show("new 30-2", pic);
         while(generation<100000)
         {
 
@@ -91,7 +98,7 @@ public:
             ss >> wind;
             wind = "Generation " + wind;
             cvpic.show(wind.c_str(), pic);
-            cvpic.moveWindow(wind.c_str(), 20+origin.width*c, 50+origin.height*r);
+            cvpic.moveWindow(wind.c_str(), 20+origin.width*c, 20+origin.height*r);
 
             c += 1; c %= col;
             if( c==0 ) {
@@ -110,9 +117,10 @@ public:
         generateInitSoluction();
         bool tag = true;
         int row=2, col=4, r=0, c=0;
-        cvpic.show("new 30-2", pic);
+
         while(generation<100000)
         {
+            cout << generation << endl;
 
             Roulette_Wheel_Seletion();
             for(int i=0;i<child.size();i+=2){
@@ -135,18 +143,30 @@ public:
                 if(rand()%100 > 85)
                     soluSet[i].Mutation(origin, divide_height, divide_width);
             }
+            Sort(soluSet);
 
             soluSet[0].DrawAll(pic);
 
             cvpic.show("third 30", pic);
-            if(generation%100==0){
+            stringstream ss;
+            string wind;
+            ss << generation;
+            ss >> wind;
+
+            wind = "image/Generation " + wind + ".jpg";
+            cout << wind << endl;
+
+            cvpic.save(wind.c_str());
+//            if(generation%100==0){
+                cout << "Generation " << generation << endl;
                 cout << "Circles:" << soluSet[0].CalCircleNumbers(divide_height, divide_width) << endl;
-                cvWaitKey();
-            }
+                cout << "fitness:" << pic.CalcDifference(origin);
+//                cvWaitKey();
+//            }
             cvpic.destoyWindow("third 30");
 
             generation++;
-            cout << generation << endl;
+            // cout << generation << endl;
         }
     }
 

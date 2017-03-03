@@ -23,6 +23,16 @@ public:
     int score;
 
     Solution() {}
+//    Solution(const Solution & rhs)
+//    {
+//        sol = rhs.sol;
+//        for(int i=0; i<sol.size(); i+=1) {
+//            sol[i] = rhs.sol[i];
+//            for(int j=0; j<sol[i].size(); j+=1) {
+//                sol[i][j] = sol[i][j];
+//            }
+//        }
+//    }
     Solution(int divide_height, int divide_width, Picture &origin)
     {
         sol.resize(divide_height);
@@ -97,10 +107,12 @@ public:
 
     void Crossover(Solution &rs, int divide_height, int divide_width)
     {
-
         int x_part = rand()%divide_width;
         int y_part = rand()%divide_height;
-        sol[y_part][x_part].swap(rs.sol[y_part][x_part]);
+//        cout << x_part << " " << y_part << endl;
+//        cout << sol.size() << " " << sol[y_part].size() << endl;
+//        cout << rs.sol.size() << " " << rs.sol[y_part].size() << endl;
+        swap(sol[y_part][x_part], rs.sol[y_part][x_part]);
     }
 
     void Mutation(Picture &origin, int divide_height, int divide_width)
